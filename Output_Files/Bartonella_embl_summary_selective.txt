@@ -1,0 +1,19 @@
+------------ ------------------------ --- ------------------- ---------- ------------------------------------------------------------
+  EMBL ID            Species          dir    begin - end       Uniprot   Function                                                    
+------------ ------------------------ --- ------------------- ---------- ------------------------------------------------------------
+AILX01000005 Bartonella washoeensis    +    240292 - 241233   J1JPX0     OMP_b-brl domain-containing protein                         
+AILX01000007 Bartonella washoeensis    -    203430 - 204257   J1JLY6     OMP_b-brl domain-containing protein                         
+AILX01000030 Bartonella washoeensis    -     34823 - 35656    J0QJM5     OMP_b-brl domain-containing protein                         
+AILZ01000002 Bartonella vinsonii       +     29520 - 30383    J0R567     OMP_b-brl domain-containing protein                         
+AILZ01000030 Bartonella vinsonii       +     51671 - 52501    J0QWD4     OMP_b-brl domain-containing protein                         
+AILZ01000030 Bartonella vinsonii       +    264210 - 265043   J1JRZ2     OMP_b-brl domain-containing protein                         
+AIMD01000020 Bartonella taylorii       +    113347 - 114180   J0RK79     OMP_b-brl domain-containing protein                         
+AIMD01000024 Bartonella taylorii       -     20411 - 21364    J0RIX3     OMP_b-brl domain-containing protein                         
+AIMD01000051 Bartonella taylorii       +     19047 - 19877    J0RAR5     OMP_b-brl domain-containing protein                         
+AY126673     Bartonella quintana       +       245 - 1078     Q8KP14     hemin-binding protein C                                     
+AY126674     Bartonella quintana       +       539 - 1423     Q8KP12     hemin-binding protein D                                     
+AY126675     Bartonella quintana       +       534 - 1433     Q8KP11     hemin-binding protein E                                     
+HG969191     Bartonella henselae       +    329789 - 330619   X5M5M3     hemin binding protein C                                     
+HG969191     Bartonella henselae       +    533006 - 533830   X5MEW9     hemin binding protein D                                     
+HG969191     Bartonella henselae       -   1251301 - 1252185  X5MHR9     hemin binding protein E                                     
+------------ ------------------------ --- ------------------- ---------- ------------------------------------------------------------

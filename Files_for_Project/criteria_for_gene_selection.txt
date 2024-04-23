@@ -1,0 +1,3 @@
+Bartonella (henselae|quintana|taylorii|vinsonii|washoeensis)
+hbp(C|D|E)
+OMP_b-brl
