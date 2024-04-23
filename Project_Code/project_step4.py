@@ -18,7 +18,7 @@ path_to_alignment_score_plot = '../Output_Files/Alignement_score_plot_by_positio
 path_to_unordered_heatmap = '../Output_Files/Heatmap_for_unordered_sequences.png'
 path_to_tree = '../Output_Files/Tree.png'
 path_to_ordered_heatmap = '../Output_Files/Heatmap_for_ordered_sequences.png'
-
+path_to_embl_summary = "../Output_Files/Bartonella_embl_summary_usingLISTOFLISTS.txt"
 # Use once to save the alignment result, otherwise you're gonna wait for eternity...
 #MSA.write_msa_as_fasta(path_to_prots,path_to_score_matrix, path_to_msa_result)
 
@@ -26,12 +26,20 @@ MSA_dict = EMBL.read_fasta(path_to_msa_result)
 Score_dict = MSA.read_score_matrix(path_to_score_matrix)
 
 overall_score, scores_by_pos = MSA.dissimilarity_score(MSA_dict,Score_dict)
-print(f'BLOSUM62 Alignment Score:{overall_score}')   # I DONT HAVE THE SAME SCORE as the one obtained by msa.py
+print(f'BLOSUM62 Alignment Score:{overall_score}')   
 
 
 MSA.plot_alignment_score(scores_by_pos, 'BLOSUM62 Alignment Score', path_to_alignment_score_plot)
 
 DistMat, seq_names = MSA.compute_dissimilarity_matrix(MSA_dict)
+
+# TODO: if I include species, they name is too long to be well represented on a tree/heatmap
+# modifies seq_names so that they contain species
+with open(path_to_embl_summary, 'r') as stream_r:
+        for line in stream_r:
+                for i in range(len(seq_names)):
+                        if seq_names[i] in line:
+                                seq_names[i] += 'B.' + line.split()[2]
 
 MSA.plot_dissimilarity_matrix_as_heatmap(DistMat, seq_names, path_to_unordered_heatmap)
 
