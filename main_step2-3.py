@@ -1,7 +1,6 @@
 import sys
-sys.path.append('../Project_Library')
-import embl_analysis as EMBL
-import basic_seq_analysis as SeqAnalysis
+from Project_Library import embl_analysis as EMBL
+from Project_Library import basic_seq_analysis as SeqAnalysis
 
 ##########          STEP 2           ##########
 # path_to_embl : str ; path to EMBL database file

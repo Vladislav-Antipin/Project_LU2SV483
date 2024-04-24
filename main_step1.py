@@ -1,7 +1,6 @@
 ##########   LU2SV483 - Project 2024   ##########
 import sys
-sys.path.append('../Project_Library')
-import basic_seq_analysis as SeqAnalysis
+from Project_Library import basic_seq_analysis as SeqAnalysis
 
 ##########          STEP 1           ##########
 print('--------------STEP 1--------------')

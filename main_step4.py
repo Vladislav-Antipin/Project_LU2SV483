@@ -1,10 +1,10 @@
 import sys
-sys.path.append('../Project_Library')
-import msa   # msa.pyc file was compiled with python3.10, so use this version to run the code
-import basic_seq_analysis as SeqAnalysis
-import embl_analysis as EMBL
-import msa_analysis as MSA
-import upgma as UPGMA
+
+from Project_Library import msa   # msa.pyc file was compiled with python3.10, so use this version to run the code
+from Project_Library import basic_seq_analysis as SeqAnalysis
+from Project_Library import embl_analysis as EMBL
+from Project_Library import msa_analysis as MSA
+from Project_Library import upgma as UPGMA
 
 from matplotlib import pyplot as plt
 
