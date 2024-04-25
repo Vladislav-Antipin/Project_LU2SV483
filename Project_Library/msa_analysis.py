@@ -206,9 +206,12 @@ def plot_alignment_score(score_list, title, path_to_output):
     '''
     List[float] * str * str -> None
     Creates and saves a matplotlib figure of alignment score by position
-    (I've chosen a heatmap as a nice represantation)
-    TODO: try to plot a histogram as well
+    (I've chosen a heatmap as a nice representation)
     '''
+    # fig : matplotlib.figure.Figure object  
+    # ax : matplotlib.axes._axes.Axes object
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.set_yticks([])   # to get rid of useless y-axis ticks
     plt.imshow([score_list], cmap = 'grey',aspect='auto')
     plt.colorbar()
     plt.title(title)
@@ -220,16 +223,16 @@ def plot_dissimilarity_matrix_as_heatmap(triang_Mat, seq_names,path_to_output):
     Assumptions: triang_Mat is a lower triangular half of dissimilarity matrix (diagonal included)
     Creates and saves a matplotlib figure of a dissimilarity matrix as a heatmap
     '''
-    # fig : class 'matplotlib.figure.Figure' ; matplotlib figure object
-    # ax : class 'matplotlib.axes._axes.Axes'; matplotlib axes object
-    fig, ax = plt.subplots()
-    plt.imshow(triangular_to_rectangular(triang_Mat), cmap = 'YlOrRd')
+    # fig : matplotlib.figure.Figure object  
+    # ax : matplotlib.axes._axes.Axes object
+    fig, ax = plt.subplots(figsize=(8, 6))
+    plt.imshow(triangular_to_rectangular(triang_Mat), cmap = 'YlOrRd', aspect='auto')
     plt.colorbar()
     plt.title('Dissimilarity Martix')
-    ax.set_xticks(np.arange(len(seq_names)), labels=seq_names)
-    ax.set_yticks(np.arange(len(seq_names)), labels=seq_names)
-    plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
-    plt.savefig(path_to_output)
+    ax.set_xticks(np.arange(len(seq_names)), labels=seq_names) ; ax.tick_params(axis='x', labelsize=5)
+    ax.set_yticks(np.arange(len(seq_names)), labels=seq_names) ; ax.tick_params(axis='y', labelsize=5)
+    plt.setp(ax.get_xticklabels(), rotation=30, ha="right", rotation_mode="anchor")  
+    plt.savefig(path_to_output, dpi = 500)
 
 def reorder_dissimilarity_matrix(triang_Mat, old_seq_names, new_seq_names):
     '''
@@ -269,19 +272,38 @@ def reorder_dissimilarity_matrix(triang_Mat, old_seq_names, new_seq_names):
     return new_Mat
 
 
-
-####### test ######
-
 if __name__ == '__main__':
 
-    names = ['A','B','C','D']
-    distmat = [
-    [0],
-    [1,0],
-    [2,3,0],
-    [4,5,6,0]]
+    # Test_seqs : Dict[str:str] ; test sequences {id:sequence}
+    Test_seqs = EMBL.read_fasta('Files_for_Project/SeqTest.fasta')
+    # Score_dict : Dict{(str,str):float} ; {(aminoacid1, aminoacid2):score}
+    Score_dict = read_score_matrix('Files_for_Project/blosum62.mat')
+    # profs_MSA_score : float ; MSA score obtained by prof's module
+    # MSA_seqs : Dict[str] ; aligned sequences {id:sequence} 
+    profs_MSA_score, MSA_seqs = msa.star_align(Test_seqs, Score_dict)
+    # my_MSA_score : float ; MSA score obtained by my module
+    # scores_by_pos : List[float] ; list of scores by position
+    my_MSA_score, scores_by_pos = dissimilarity_score(MSA_seqs,Score_dict)
+    assert profs_MSA_score == my_MSA_score
 
-    newnames = ['D','B','A','C']
-    newdistmat = reorder_dissimilarity_matrix(distmat,names,newnames)
+    # DisMat : List[List[float]] ; dissimilarity matrix
+    # seq_names : List[str] ; sequences' names (header of dissimilarity matrix)
+    DisMat , seq_names = compute_dissimilarity_matrix(MSA_seqs)
 
-    print(*newdistmat, sep = '\n')
+    # new_seq_names : List[str] ; reordered sequences' names
+    new_seq_names = seq_names[::-1] 
+    # DisMat : List[List[float]] ; reordered dissimilarity matrix
+    newDisMat = reorder_dissimilarity_matrix(DisMat, seq_names, new_seq_names)
+
+    print('Test sequences:')
+    print(*['>'+name+'\n'+ Test_seqs[name] for name in Test_seqs.keys()], sep='\n')
+    print('Aligned:')
+    print(*['>'+name+'\n'+ MSA_seqs[name] for name in MSA_seqs.keys()], sep='\n')
+    print('Overall score:',my_MSA_score)
+    print('Scores by position:\n', scores_by_pos)
+    print('Dissimilarity matrix:')
+    print(seq_names,*triangular_to_rectangular([[round(elt,2) for elt in row] for row in DisMat]), sep='\n')
+    print('Reordered matrix:')
+    print(new_seq_names,*triangular_to_rectangular([[round(elt,2) for elt in row] for row in newDisMat]), sep='\n')
+    
+    

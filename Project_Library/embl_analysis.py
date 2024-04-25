@@ -2,9 +2,8 @@ import sys
 sys.path.append('Project_library')
 
 import re
-import basic_seq_analysis
+import basic_seq_analysis as SeqAnalysis
 
-# ?do we need to exclude incomplete sequences?
 def get_EMBL_summary_as_dict(path):
     ''' str -> dict[str:List[str]]
     Assumption: takes a path to EMBL database file
@@ -200,7 +199,7 @@ def extract_CDSs_seq_from_fasta(CDS_positions,fasta):
         if dir == '+':
             extracted_seqs[uniprot] = fasta[id][int(begin)-1:int(end)]
         else:
-            extracted_seqs[uniprot] = basic_seq_analysis.rev_compl(fasta[id][int(begin)-1:int(end)])
+            extracted_seqs[uniprot] = SeqAnalysis.rev_compl(fasta[id][int(begin)-1:int(end)])
     return extracted_seqs
 
 

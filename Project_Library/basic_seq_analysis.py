@@ -136,8 +136,25 @@ def find_all_ORFs(seq, length_limit):
                     break
     return ORFs
 
+def read_genetic_code(path_to_gencode):
+    ''' str -> Dict[str:str]
+    Assumption: path_to_gencode leads to a file where each represents "{Codon} {Aminoacid}"
+    Returns a dictionary {Codon:Aminoacid}
+    '''
+    # gencode : Dict[str:str] ; dictionary for genetic code {Codon:Aminoacid}
+    gencode = {}
+    # streamr : stream ; input file stream
+    with open(path_to_gencode) as streamr:
+        # line : str ; a read line of the file
+        for line in streamr:
+            if len(line.split())==2:
+                # codon, aa : str ; codon and aminoacid read from genetic code file
+                codon, aa = line.split()
+                gencode[codon]=aa
+    return gencode 
+
 def translate(ORF,gencode):
-    ''' str * dict[str:str] -> str
+    ''' str * Dict[str:str] -> str
     Assumption: ORF is an open reading frame, gencode is a dictionary {Codon:Aminoacid}
     Returns a translated ORF according to given genetic code
     '''

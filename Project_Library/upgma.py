@@ -1,7 +1,8 @@
 import sys
 sys.path.append('Project_library')
 
-from Project_Library import msa_analysis as MSA
+import embl_analysis as EMBL
+import msa_analysis as MSA
 from copy import deepcopy
 
 def closest_nodes(DistMat):
@@ -234,39 +235,29 @@ def convert_tree_from_dict_to_newik(tree, root_name):
     return newik
 
 
-if __name__ == '__main__' and False:
-    MSA_test = {
-    'seq1' : 'MEGKVNEDVAGDANCRLM---LLV',
-    'seq2' : 'MEGKVNEDVAGEANCKLMQP-LLV',
-    'seq3' : 'MEGKVHDDV---SNCKLLQPILLV',
-    'seq4' : 'MEGKVHE----EANCKLMQPILLV'}
+if __name__ == '__main__':
 
-    path_to_mat = '../Files_for_Project/blosum62.mat'
+     # Test_seqs : Dict[str:str] ; test sequences {id:sequence}
+    Test_seqs = EMBL.read_fasta('Files_for_Project/SeqTest.fasta')
+    # Score_dict : Dict{(str,str):float} ; {(aminoacid1, aminoacid2):score}
+    Score_dict = MSA.read_score_matrix('Files_for_Project/blosum62.mat')
+    
+    # MSA_seqs : List[str] ; aligned sequences {id:sequence} 
+    MSA_seqs = MSA.msa.star_align(Test_seqs, Score_dict)[1]
+    
 
+    # DisMat : List[List[float]] ; dissimilarity matrix
+    # seq_names : List[str] ; sequences' names (header of dissimilarity matrix)
+    DisMat , seq_names = MSA.compute_dissimilarity_matrix(MSA_seqs)
 
-    seq_names, DistMat = MSA.compute_dissimilarity_matrix(MSA_test)
+    # tree : Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } ; tree as a 
+    #        dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))}
+    # root_name : str ; name of the root node
+    tree, root_name = get_tree_upgma(DisMat, seq_names)
 
-    DistMat_test = [
-    [0.0],
-    [42.0,0.0],
-    [36.0,45.0,0.0],
-    [40.0,49.0,22.0,0.0],
-    [16.0,31.0,40.0,36.0,0.0],
-    [32.0,53.0,34.0,42.0,28.0,0.0]
-    ]
-    leaf_names = ['A','B','C','D','E','F']
-    #child_i, child_j = closest_nodes(DistMat_test)
-    #print(distance_to_parent(4,0,leaf_names,DistMat_test,{}))
-
-    #tree = {}
-    #parent_name, weight_i, weight_j = add_node(tree,4,8.0,0,8.0,leaf_names)
-    #print(tree)
-    #update_nodes(child_i, child_j, parent_name,leaf_names)
-    #print(leaf_names)
-
-    #print(*update_matrix(DistMat_test,child_i, child_j,tree, weight_i,weight_j, leaf_names), sep = '\n')
-    #def add_node(tree,child_i,dist_i, child_j,dist_j,node_names)
-
-    tree, root_name = get_tree_upgma(DistMat_test,leaf_names)
-    #print(tree)
-    print(convert_tree_from_dict_to_newik(tree, root_name))
+    print('Aligned test sequences:')
+    print(*['>'+name+'\n'+ MSA_seqs[name] for name in MSA_seqs.keys()], sep='\n')
+    print('Tree :',tree, sep='\n')
+    print('Root :',root_name)
+    print('Ordered sequences:', get_ordered_names_from_tree(tree,root_name))
+    print('Newik format', convert_tree_from_dict_to_newik(tree, root_name))
