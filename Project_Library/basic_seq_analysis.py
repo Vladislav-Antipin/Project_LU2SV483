@@ -52,10 +52,10 @@ def ORF_position(seq):
 def compare_seqs(seq1,seq2):
     ''' str*str -> int,int,int
     Assumption: seq1 and seq2 are aligned sequences
-    Returns the number of matches, substitutuions and indels
+    Returns the number of matches, substitutions and indels
     '''
     # matches : int ; counter for matches
-    # substs : int ; counter for substitutuions
+    # substs : int ; counter for substitutions
     # indels : int ; counter for indels
     matches, substs, indels = 0,0,0
     # i : int ; index in the sequence
@@ -74,17 +74,17 @@ def edit_distance(seq1,seq2):
     Assumption: seq1 and seq2 are aligned sequences
     Returns the edit distance (the sum of indels and substitutions)
     '''
-    # compseqs : tuple(int) ; number of matches, substitutuions and indels
+    # compseqs : tuple(int) ; number of matches, substitutions and indels
     compseqs = compare_seqs(seq1,seq2)
     return compseqs[1]+compseqs[2]
 
 def align_score(seq1,seq2, Wm, Ws, Wi):
     ''' str*str*float*float*float -> float
     Assumption: seq1 and seq2 are aligned sequences
-    Returns the alignment score - the weighted sum of matches, substitutuions and indels
+    Returns the alignment score - the weighted sum of matches, substitutions and indels
     (Wm,Ws,Wi are corresponding weights)
     '''
-    # compseqs : tuple(int,int,int) ; number of matches, substitutuions and indels
+    # compseqs : tuple(int,int,int) ; number of matches, substitutions and indels
     compseqs = compare_seqs(seq1,seq2)
     return Wm*compseqs[0]+Ws*compseqs[1]+Wi*compseqs[2]
 
@@ -98,12 +98,12 @@ def identity_ratio(seq1,seq2):
 def find_all_ORFs(seq, length_limit):
     ''' str*int -> dict[str:List[tuple(int)]]
     Assumption: seq is a nucleotide sequence, length_limit is a positive integer
-    Returns a dictionnary with directions '+' and '-' as keys,
+    Returns a dictionary with directions '+' and '-' as keys,
     and list of tuples of the positions of the start and the end of
     corresponding ORFs
     Note: positions start from 0 and not from 1
     '''
-    # ORFs : dict[str:List[tuple(int)]] ; dictionnary with directions '+' and '-' as keys,
+    # ORFs : dict[str:List[tuple(int)]] ; dictionary with directions '+' and '-' as keys,
     # and list of tuples of the positions of the start and the end of corresponding ORFs
     ORFs = {'+':[],'-':[]}
 

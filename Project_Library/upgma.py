@@ -30,7 +30,7 @@ def distance_to_parent(child_i, child_j,node_names, DistMat,tree):
     '''
     int * int * List[str] * List[List[float]] * Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) }
     -> List[float]
-    Assumtion: the tree is organised as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
+    Assumption: the tree is organized as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
     child_i and child_j are indices in distance matrix corresponding for child nodes of interest
     Returns a list containing distances from child_i and child_j to their parent
     '''
@@ -59,7 +59,7 @@ def add_node(tree,child_i,dist_i, child_j,dist_j,node_names, leaf_names):
     '''
     Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } * int * float * int * float * List[str] * List[str]
     -> str, int, int
-    Assumtion: the tree is organised as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
+    Assumption: the tree is organized as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
     child_i and child_j are indices in distance matrix corresponding for child nodes of interest,
     dist_i and dist_j are distances from a corresponding child to their parent
     node_names is a header of the current distance matrix,
@@ -93,7 +93,7 @@ def add_node(tree,child_i,dist_i, child_j,dist_j,node_names, leaf_names):
 def update_nodes(child_i,child_j,parent_name,node_names):
     '''
     int * int * str * List[str] -> None
-    Assumtion: child_i and child_j are indices in distance matrix corresponding for child nodes of interest,
+    Assumption: child_i and child_j are indices in distance matrix corresponding for child nodes of interest,
     parent_name is different from other names already present among nodes
     Modifies a header of a distance matrix (node names) by deleting the names of child_i and child_j
     and adding a parent name at the end
@@ -124,8 +124,8 @@ def update_matrix(DistMat,child_i, child_j,tree, weight_i,weight_j, node_names):
     '''
     List[List[float]] * int * int * Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } * int * int * List[str]
     -> List[List[float]]
-    Assumtion: the DistMat is a distance matrix,
-    the tree is organised as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
+    Assumption: the DistMat is a distance matrix,
+    the tree is organized as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
     child_i and child_j are indices in distance matrix corresponding for child nodes of interest,
     weight_i and weight_j are weights (nb of leaves) of corresponding child nodes
     node_names is a header of the current distance matrix
@@ -190,13 +190,13 @@ def get_tree_upgma(OriginalDistMat, leaf_names):
 def get_ordered_names_from_tree(tree, root_name):
     '''
     Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } * str -> List[str]
-    Assumtion: the tree is organised as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
+    Assumption: the tree is organized as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
     root_name is the name of the root of the tree
-    Returns an ordered list of leaf names (the odrer of appearence in a parenthesised form)
+    Returns an ordered list of leaf names (the order of appearance in a parenthesized form)
     '''
     # stack : List[str] ; a stack needed to get ordered list of leaves
     stack = [root_name]
-    # leaves_in_order : List[str] ; list of odrered leaf names
+    # leaves_in_order : List[str] ; list of ordered leaf names
     leaves_in_order = []
     while len(stack) > 0:
         # node : str ; a name of the popped node
@@ -211,11 +211,11 @@ def get_ordered_names_from_tree(tree, root_name):
 def convert_tree_from_dict_to_newik(tree, root_name):
     '''
     Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } * str -> str
-    Assumtion: the tree is organised as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
+    Assumption: the tree is organized as a dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))},
     root_name is the name of the root of the tree
     Returns a tree written in a newik format
     '''
-    # stack : List[str] ; a stack needed to get ordered list of leaves and parethesis
+    # stack : List[str] ; a stack needed to get ordered list of leaves and parenthesis
     stack = [root_name]
     # newik : str ; a tree written in a newik format
     newik = ''

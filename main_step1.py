@@ -30,12 +30,12 @@ print('STOP positions for the reverse complement:',stops_rev)
 seqal = ['AGTTAGAG--TAGGGCCAGCCAGCATAGCA-----GGTT',
          'AGTTCCAGTATAGGCCCA---AGCAAAGCAGTACCGGTT']
 # match : int ; number of matches
-# subst : int ; number of substitutuions
+# subst : int ; number of substitutions
 # indel : int ; number of indels
 match, subst, indel = SeqAnalysis.compare_seqs(seqal[0],seqal[1])
 # edit_dist : int ; edit distance (the sum of indels and substitutions)
 edit_dist = SeqAnalysis.edit_distance(seqal[0],seqal[1])
-# al_score : float ; alignment score (weighted sum of matches, substitutuions and indels)
+# al_score : float ; alignment score (weighted sum of matches, substitutions and indels)
 al_score = SeqAnalysis.align_score(seqal[0],seqal[1],+2,-1,-2)
 # id_ratio : float ; identity ratio (the proportion of matches)
 id_ratio = SeqAnalysis.identity_ratio(seqal[0],seqal[1])

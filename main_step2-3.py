@@ -9,7 +9,7 @@ path_to_embl = './Files_for_Project/Bartonella.dat'
 path_to_summary_output_from_dict = './Output_Files/Bartonella_embl_summary_usingDICTIONARY.txt'
 # path_to_summary_output_from_list_of_lists : str
 path_to_summary_output_from_listoflists = './Output_Files/Bartonella_embl_summary_usingLISTOFLISTS.txt'
-# path_to_regex : str ; path to the file with regex - critirea to select CDSs
+# path_to_regex : str ; path to the file with regex - criteria to select CDSs
 path_to_regex = './Files_for_Project/criteria_for_gene_selection.txt'
 # path_to_fasta : str ; path to the Fasta file with genomic DNA
 path_to_fasta = './Files_for_Project/Bartonella.fasta'
@@ -18,14 +18,14 @@ path_to_fasta = './Files_for_Project/Bartonella.fasta'
 
 # embl_sum : dict[str:List[str]] ; EMBL file summary {UniProtID : [Sequence ID, Species, Direction, Begin, End, Function]}
 embl_sum_dict = EMBL.get_EMBL_summary_as_dict(path_to_embl)
-EMBL.write_EMBL_summary_file_ftom_dict(embl_sum_dict, path_to_summary_output_from_dict )
+EMBL.write_EMBL_summary_file_from_dict(embl_sum_dict, path_to_summary_output_from_dict )
 
 # embl_sum : dict[str:List[str]] ; EMBL file summary {UniProtID : [Sequence ID, Species, Direction, Begin, End, Function]}
 embl_sum_listoflists = EMBL.get_EMBL_summary_as_listoflists(path_to_embl)
-EMBL.write_EMBL_summary_file_ftom_listoflists(embl_sum_listoflists, path_to_summary_output_from_listoflists )
+EMBL.write_EMBL_summary_file_from_listoflists(embl_sum_listoflists, path_to_summary_output_from_listoflists )
 
 '''Moral of the story : we didn't get exactly the same results using a list of lists
-and a dictionnary using UniProtID as a key - which means that
+and a dictionary using UniProtID as a key - which means that
 UniProtID is not a unique identifier for CDS and we better use a list of lists'''
 
 print('EMBL summary saved to', path_to_summary_output_from_listoflists )
@@ -73,4 +73,4 @@ with open(path_to_protseqs, 'w') as stream_w:
     for uniprot in ProtSeqs:
         stream_w.write(f'>{uniprot}\n{ProtSeqs[uniprot][:-1]}\n')
 
-print('Nucleotide sequences, selected with critirea from', path_to_regex,'\nare translated and saved to', path_to_protseqs)
+print('Nucleotide sequences, selected with criteria from', path_to_regex,'\nare translated and saved to', path_to_protseqs)

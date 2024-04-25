@@ -7,18 +7,18 @@ import embl_analysis as EMBL
 import numpy as np
 import msa
 
-def write_msa_as_fasta(path_to_unaligned_seqs, path_to_substitutuion_matrix, path_to_output):
+def write_msa_as_fasta(path_to_unaligned_seqs, path_to_substitution_matrix, path_to_output):
     '''
     str * str * str -> None
-    Assumtion: unaligned sequences are in fasta format file, substitution matrix is in mat format file
-    Writes in an output fasta format file a reslut of Multiple Sequence Alignement of unaligned sequences
+    Assumption: unaligned sequences are in fasta format file, substitution matrix is in mat format file
+    Writes in an output fasta format file a result of Multiple Sequence Alignment of unaligned sequences
     using a given  substitution matrix
     '''
     # ProtSeqs : Dict{str, str} ; unaligned sequences {UniProtID : sequence}
     ProtSeqs = EMBL.read_fasta(path_to_unaligned_seqs)
     # SubMat : Dict{(str,str):float} ; substitution matrix
-    SubMat = read_score_matrix(path_to_substitutuion_matrix)
-    # MSA_score : float ; multiple alignement score
+    SubMat = read_score_matrix(path_to_substitution_matrix)
+    # MSA_score : float ; multiple alignment score
     # MSA_seqs : Dict{str:str} ; aligned sequences {UniProtID : sequence}
     MSA_score, MSA_seqs = msa.star_align(ProtSeqs, SubMat)
     print(len(ProtSeqs), 'sequences, score =', MSA_score)
@@ -34,9 +34,9 @@ def write_msa_as_fasta(path_to_unaligned_seqs, path_to_substitutuion_matrix, pat
 def msa_alignment_score(MSA_dict, w_match, w_mismatch, w_indel):
     '''
     Dict{str:str} * float * float * float -> float, List[float]
-    Assumtion: MSA_dict contains same sized aligned sequences as values
+    Assumption: MSA_dict contains same sized aligned sequences as values
     Returns an overall alignment score and a list of scores by position
-    Note : a score for each positition is a sum of all pairwise scores for this position,
+    Note : a score for each position is a sum of all pairwise scores for this position,
     when a gap matches another gap - the score is zero
     '''
     # MSA : List[str] ; list of aligned sequences
@@ -50,7 +50,7 @@ def msa_alignment_score(MSA_dict, w_match, w_mismatch, w_indel):
         # score : float ; a score to be calculated for one position
         score = 0.0
 
-        # A nested 'for' loop is used to compare all possible paires of sequences
+        # A nested 'for' loop is used to compare all possible pairs of sequences
         # i : int ; index of the first sequence to consider
         for i in range(len(MSA)):
             # j : int ; index of the second sequence to consider
@@ -74,8 +74,8 @@ def msa_alignment_score(MSA_dict, w_match, w_mismatch, w_indel):
 def read_score_matrix(path):
     '''
     str -> Dict{(str,str):float}
-    Assumtion: path leads to a mat format file with a substitution matrix,
-    the first not empty and not commentary line is concidered as a header
+    Assumption: path leads to a mat format file with a substitution matrix,
+    the first not empty and not commentary line is considered as a header
     Note: '*' is considered as gap and substituted by '-' in an output dictionary
     Returns a dictionary {(aminoacid1, aminoacid2):score}
     '''
@@ -85,7 +85,7 @@ def read_score_matrix(path):
     with open(path,'r') as stream_r:
         # line : str ; a line read from input file
         for line in stream_r:
-            # The first not empty line which is not commentary is concidered as a header
+            # The first not empty line which is not commentary is considered as a header
             if line.strip()[0] != '#' and line.strip() != '' :
                 # header : List[str] ; a header of the table
                 header = line.split()
@@ -111,7 +111,7 @@ def read_score_matrix(path):
 def dissimilarity_score(MSA_dict,Score_dict):
     '''
     Dict{str:str} * Dict{(str,str):float} -> float, List[float]
-    Assumtion: MSA_dict contains same sized aligned porotein sequences as values,
+    Assumption: MSA_dict contains same sized aligned protein sequences as values,
     Score_dict is of a {(aminoacid1, aminoacid2):score} format
     Returns an overall alignment score and a list of scores by position
     '''
@@ -126,7 +126,7 @@ def dissimilarity_score(MSA_dict,Score_dict):
         # score : float ; a score to be calculated for one position
         score = 0
 
-        # A nested 'for' loop is used to compare all possible paires of sequences
+        # A nested 'for' loop is used to compare all possible pairs of sequences
         # i : int ; index of the first sequence to consider
         for i in range(len(MSA)):
             # j : int ; index of the second sequence to consider
@@ -143,7 +143,7 @@ def dissimilarity_score(MSA_dict,Score_dict):
 def compute_dissimilarity_matrix(MSA_dict):
     '''
     Dict{str:str} -> List[List[float]], List[str]
-    Assumtion: MSA_dict contains same sized aligned porotein sequences as values
+    Assumption: MSA_dict contains same sized aligned protein sequences as values
     Note: positions with indels don't count for a total number of positions
     Returns a lower triangular half of a dissimilarity matrix (diagonal included)
     and a list of sequence names (header of the matrix)
@@ -237,7 +237,7 @@ def plot_dissimilarity_matrix_as_heatmap(triang_Mat, seq_names,path_to_output):
 def reorder_dissimilarity_matrix(triang_Mat, old_seq_names, new_seq_names):
     '''
     List[List[int]] * List[str] * List[str] -> List[List[int]]
-    Assumtion: triang_Mat is a lower triangular half of original dissimilarity matrix (diagonal included),
+    Assumption: triang_Mat is a lower triangular half of original dissimilarity matrix (diagonal included),
     old_seq_names and new_seq_names contain the same elements, just in a different order
     Returns a lower triangular half of new dissimilarity matrix (diagonal included), where elements are
     reordered according to the new header (new_seq_names)
@@ -246,7 +246,7 @@ def reorder_dissimilarity_matrix(triang_Mat, old_seq_names, new_seq_names):
     new_Mat = deepcopy(triang_Mat)
 
     # No necessity to do this indexing stuff if you use .index() method
-    # old_to_new_index : Dict{int:int} ; a dictionnary of correspondance of indices {old index : new index}
+    # old_to_new_index : Dict{int:int} ; a dictionary of correspondence of indices {old index : new index}
     old_to_new_index = {}
     # new_index : int
     for new_index in range(len(new_seq_names)):
@@ -258,7 +258,7 @@ def reorder_dissimilarity_matrix(triang_Mat, old_seq_names, new_seq_names):
     for i in range(len(triang_Mat)):
         for j in range(len(triang_Mat[i])):
             # Note: since it's a lower triangular matrix, column index can never exceed a row index!
-            #       and they're interchangeble since this matrix is symmetrical
+            #       and they're interchangeable since this matrix is symmetrical
             # new_i : int ; new row index
             new_i = max(old_to_new_index[i],old_to_new_index[j])
             # new_j : int ; new column index

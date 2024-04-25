@@ -19,7 +19,7 @@ path_to_prots = './Output_Files/selected_proteins.fasta'
 path_to_msa_result = './Output_Files/aligned_selected_proteins.fasta'
 
 # path_to_alignment_score_plot : str ; path to a plot of MSA score by position to be saved
-path_to_alignment_score_plot = './Output_Files/Alignement_score_plot_by_position.png'
+path_to_alignment_score_plot = './Output_Files/Alignment_score_plot_by_position.png'
 # path_to_unordered_heatmap : str ; path to a heatmap of unordered sequences to be saved
 path_to_unordered_heatmap = './Output_Files/Heatmap_for_unordered_sequences.png'
 # path_to_ordered_heatmap : str ; path to a heatmap of ordered sequences to be saved
@@ -34,7 +34,7 @@ path_to_tree = './Output_Files/Tree.png'
 print('Aligned sequences as well as alignment score are saved to', path_to_msa_result)
 
 '''Question 2 + 3'''
-# MSA_dict : Dict[str:str] ;  dictionnary of MSA result {sequence ID : aligned sequence}
+# MSA_dict : Dict[str:str] ;  dictionary of MSA result {sequence ID : aligned sequence}
 MSA_dict = EMBL.read_fasta(path_to_msa_result)
 # Score_dict : Dict{(str,str):float} ; dictionary {(aminoacid1, aminoacid2):score}
 Score_dict = MSA.read_score_matrix(path_to_score_matrix)
@@ -76,8 +76,8 @@ print('Heatmap of dissimilarity matrix (sequences aren\'t ordered) is saved in',
 # root_name : str ; name of the root node
 tree, root_name = UPGMA.get_tree_upgma(DistMat, seq_names)
 
-# ordered_seq_names : List[str] ; list of sequence names ordered by their position in the paranthesized form of tree
-# newik_format : str ; tree represented in a newik (paranthesized) format
+# ordered_seq_names : List[str] ; list of sequence names ordered by their position in the parenthesized form of tree
+# newik_format : str ; tree represented in a newik (parenthesized) format
 ordered_seq_names = UPGMA.get_ordered_names_from_tree(tree, root_name)
 newik_format = UPGMA.convert_tree_from_dict_to_newik(tree, root_name)
 
@@ -95,7 +95,7 @@ handle = StringIO(newik_format)
 tree_to_build = Phylo.read(handle, "newick")
 fig = plt.figure(figsize=(12,8), dpi=100)
 ax = fig.add_subplot(1, 1, 1)
-ax.set_yticks([]) # to get rid of unuseful y axis ticks
+ax.set_yticks([]) # to get rid of unrestful y axis ticks
 plt.rcParams.update({
     'font.size': 11,          
     'axes.titlesize': 20,     
