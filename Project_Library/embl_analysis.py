@@ -8,7 +8,7 @@ def get_EMBL_summary_as_dict(path):
     ''' str -> dict[str:List[str]]
     Assumption: takes a path to EMBL database file
     Returns a dictionnary of lists for each CDS UniProtID, each list consists of : ID of the sequence of origin,
-    organism species, direction, begging and end of CDS and function of the corresponding protein
+    organism species, direction, beggining and end of CDS and function of the corresponding protein
     Note:!!! Dictionary with UniProtID doesn't seem to work since there're less CDSs selected when
     I used dictionnary than when I used a list of lists (cf Output_Files)...
     '''
@@ -63,7 +63,7 @@ def get_EMBL_summary_as_dict(path):
                     dir = '-'
                 else:
                     dir = '+'
-                # begin, end : str ; begging and end of CDS
+                # begin, end : str ; beginning and end of CDS
                 begin, end = re.search(r'[0-9]+\.\.[0-9]+', line).group().split('..')
     return embl_sum
 
@@ -72,7 +72,7 @@ def write_EMBL_summary_file_ftom_dict(embl_sum, output_file_name):
     ''' dict[str:List[str]] * str -> None
     Assumption: embl_sum is the summary of EMBL data base file of the format returned
     by get_EMBL_summary_as_dict() function (dictionnary of lists for UniProtID of each CDS consisting of :
-    ID of the sequence of origin,organism species, direction, begging and end of CDS and function
+    ID of the sequence of origin,organism species, direction, beginning and end of CDS and function
     of the corresponding protein)
     Writes a text file with an EMBL summary formatted as a table
     '''
@@ -99,7 +99,7 @@ def get_and_select_CDS_positions(path_to_embl, path_to_regex):
     gene name and protein function ('product') on 1st, 2nd and 3rd lines respectively
     with a new line character after each line
     Returns a dictionnary of lists for each of selected CDS UniProtID, each list consists of :
-    ID of the sequence of origin, direction, begging and end of CDS
+    ID of the sequence of origin, direction, beginning and end of CDS
     '''
     # CDS_positions : dict[str:List[str]] ; dictionary of lists {UniProtID : [Sequence ID, Direction, Begin, End]}
     CDS_positions = {}
@@ -149,7 +149,7 @@ def get_and_select_CDS_positions(path_to_embl, path_to_regex):
                     dir = '-'
                 else:
                     dir = '+'
-                # begin, end : str ; begging and end of CDS
+                # begin, end : str ; beginning and end of CDS
                 begin, end = re.search(r'[0-9]+\.\.[0-9]+', line).group().split('..')
 
     return CDS_positions
@@ -186,7 +186,7 @@ def extract_CDSs_seq_from_fasta(CDS_positions,fasta):
     ''' dict[str:List[str]] * dict[str:str] -> dict[str:str]
     Assumption: CDS_positions is an oupput of my get_and_select_CDS_positions() function
     (dictionnary of lists for each of selected CDS UniProtID, where each list consists of :
-    ID of the sequence of origin, direction, begging and end of CDS) ;
+    ID of the sequence of origin, direction, beginning and end of CDS) ;
     fasta is an output of my read_fasta() function - a dictionnary {Sequence ID : Sequence}
     Returns a dictionary {UniProtID : Sequence}
     '''
@@ -194,7 +194,7 @@ def extract_CDSs_seq_from_fasta(CDS_positions,fasta):
     extracted_seqs = {}
     # uniprot : str ; UniProt ID, a key of CDS_positions dictionary
     for uniprot in CDS_positions:
-        # id, dir, begin, end: str; ID of the sequence of origin,direction, begging and end
+        # id, dir, begin, end: str; ID of the sequence of origin,direction, beginning and end
         id, dir, begin, end = CDS_positions[uniprot]
         if dir == '+':
             extracted_seqs[uniprot] = fasta[id][int(begin)-1:int(end)]
@@ -210,7 +210,7 @@ def get_EMBL_summary_as_listoflists(path):
     ''' str -> List[List[str]]
     Assumption: takes a path to EMBL database file
     Returns a list of lists for each CDS ,each list consists of : ID of the sequence of origin,
-    organism species, direction, begging and end of CDS, UniProtID and function of the corresponding protein
+    organism species, direction, beginning and end of CDS, UniProtID and function of the corresponding protein
     '''
     # embl_sum : List[List[str]] ; list of lists [Sequence ID, Species, Direction, Begin, End,UniProtID, Function] for each CDS
     embl_sum =[]
@@ -263,7 +263,7 @@ def get_EMBL_summary_as_listoflists(path):
                     dir = '-'
                 else:
                     dir = '+'
-                # begin, end : str ; begging and end of CDS
+                # begin, end : str ; beginning and end of CDS
                 begin, end = re.search(r'[0-9]+\.\.[0-9]+', line).group().split('..')
     return embl_sum
 
@@ -271,7 +271,7 @@ def write_EMBL_summary_file_ftom_listoflists(embl_sum, output_file_name):
     ''' List[List[str]] * str -> None
     Assumption: embl_sum is the summary of EMBL data base file of the format returned
     by get_EMBL_summary_as_listoflists() function (a list of lists for each CDS ,each
-    list consists of : ID of the sequence of origin, organism species, direction, begging
+    list consists of : ID of the sequence of origin, organism species, direction, beginning
     and end of CDS, UniProtID and function of the corresponding protein)
     Writes a text file with an EMBL summary formatted as a table
     '''
