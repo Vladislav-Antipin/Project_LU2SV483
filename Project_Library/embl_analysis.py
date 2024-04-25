@@ -1,3 +1,6 @@
+import sys
+sys.path.append('Project_library')
+
 import re
 import basic_seq_analysis
 

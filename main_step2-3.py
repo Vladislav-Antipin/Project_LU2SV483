@@ -1,4 +1,3 @@
-import sys
 from Project_Library import embl_analysis as EMBL
 from Project_Library import basic_seq_analysis as SeqAnalysis
 
@@ -50,6 +49,7 @@ with open(path_to_gencode) as streamr:
             # codon, aa : str ; codon and aminoacid read from genetic code file
             codon, aa = line.split()
             gencode[codon]=aa
+            
 # ProtSeqs : dict[str:str] ; dictionary {UniProtID : Protein sequence}
 ProtSeqs = {}
 # uniprot : str ; UniProtID, a key of CDSs dictionary

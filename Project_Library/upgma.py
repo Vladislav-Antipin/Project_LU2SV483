@@ -1,4 +1,7 @@
-import msa_analysis as MSA
+import sys
+sys.path.append('Project_library')
+
+from Project_Library import msa_analysis as MSA
 from copy import deepcopy
 
 def closest_nodes(DistMat):

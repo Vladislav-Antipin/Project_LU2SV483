@@ -1,3 +1,6 @@
+import sys
+sys.path.append('Project_library')
+
 from matplotlib import pyplot as plt
 from copy import deepcopy
 import embl_analysis as EMBL
@@ -143,6 +146,7 @@ def compute_dissimilarity_matrix(MSA_dict):
     Assumtion: MSA_dict contains same sized aligned porotein sequences as values
     Note: positions with indels don't count for a total number of positions
     Returns a lower triangular half of a dissimilarity matrix (diagonal included)
+    and a list of sequence names (header of the matrix)
     '''
     # seq_names : List[str] ; a header of dissimilarity table with sequence names
     seq_names = []
