@@ -1,18 +1,19 @@
+import os
 from Project_Library import embl_analysis as EMBL
 from Project_Library import basic_seq_analysis as SeqAnalysis
 
 '''          STEP 2           '''
 
 # path_to_embl : str ; path to EMBL database file
-path_to_embl = './Files_for_Project/Bartonella.dat'
+path_to_embl = os.path.join('Files_for_Project','Bartonella.dat')
 # path_to_summary_output_from_dict : str
-path_to_summary_output_from_dict = './Output_Files/Bartonella_embl_summary_usingDICTIONARY.txt'
+path_to_summary_output_from_dict = os.path.join('Output_Files','Bartonella_embl_summary_usingDICTIONARY.txt')
 # path_to_summary_output_from_list_of_lists : str
-path_to_summary_output_from_listoflists = './Output_Files/Bartonella_embl_summary_usingLISTOFLISTS.txt'
+path_to_summary_output_from_listoflists = os.path.join('Output_Files','Bartonella_embl_summary_usingLISTOFLISTS.txt')
 # path_to_regex : str ; path to the file with regex - criteria to select CDSs
-path_to_regex = './Files_for_Project/criteria_for_gene_selection.txt'
+path_to_regex = os.path.join('Files_for_Project','criteria_for_gene_selection.txt')
 # path_to_fasta : str ; path to the Fasta file with genomic DNA
-path_to_fasta = './Files_for_Project/Bartonella.fasta'
+path_to_fasta = os.path.join('Files_for_Project','Bartonella.fasta')
 
 '''Question 1'''
 
@@ -55,9 +56,9 @@ CDSs = EMBL.extract_CDSs_seq_from_fasta(CDS_positions,genome)
 '''Question 3'''
 
 # path_to_gencode : str ; path to file with the genetic code
-path_to_gencode = './Files_for_Project/CodeGenetique.tab'
+path_to_gencode = os.path.join('Files_for_Project','CodeGenetique.tab')
 # path_to_protseqs : str ; path to save protein sequences
-path_to_protseqs = './Output_Files/selected_proteins.fasta'
+path_to_protseqs = os.path.join('Output_Files','selected_proteins.fasta')
 
 # gencode : Dict[str:str] ; dictionary for genetic code {Codon:Aminoacid}
 gencode = SeqAnalysis.read_genetic_code(path_to_gencode)

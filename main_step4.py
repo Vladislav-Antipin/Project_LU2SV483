@@ -1,3 +1,5 @@
+import os 
+
 from Project_Library import embl_analysis as EMBL
 from Project_Library import msa_analysis as MSA
 from Project_Library import upgma as UPGMA
@@ -9,23 +11,23 @@ from io import StringIO
 
 
 # path_to_score_matrix : str ; path to score (aka substitution) matrix
-path_to_score_matrix = './Files_for_Project/blosum62.mat'
+path_to_score_matrix = os.path.join('Files_for_Project','blosum62.mat')
 # path_to_embl_summary : str ; path to an embl summary (generated in step 2)
-path_to_embl_summary = "./Output_Files/Bartonella_embl_summary_usingLISTOFLISTS.txt"
+path_to_embl_summary = os.path.join('Output_Files','Bartonella_embl_summary_usingLISTOFLISTS.txt')
 
 # path_to_prots : str ; path to fasta file with protein sequences to be analyzed
-path_to_prots = './Output_Files/selected_proteins.fasta'
+path_to_prots = os.path.join('Output_Files','selected_proteins.fasta')
 # path_to_msa_result : str ; path to msa result (to be saved or used directly)
-path_to_msa_result = './Output_Files/aligned_selected_proteins.fasta'
+path_to_msa_result = os.path.join('Output_Files','aligned_selected_proteins.fasta')
 
 # path_to_alignment_score_plot : str ; path to a plot of MSA score by position to be saved
-path_to_alignment_score_plot = './Output_Files/Alignment_score_plot_by_position.png'
+path_to_alignment_score_plot = os.path.join('Output_Files','Alignment_score_plot_by_position.png')
 # path_to_unordered_heatmap : str ; path to a heatmap of unordered sequences to be saved
-path_to_unordered_heatmap = './Output_Files/Heatmap_for_unordered_sequences.png'
+path_to_unordered_heatmap = os.path.join('Output_Files','Heatmap_for_unordered_sequences.png')
 # path_to_ordered_heatmap : str ; path to a heatmap of ordered sequences to be saved
-path_to_ordered_heatmap = './Output_Files/Heatmap_for_ordered_sequences.png'
+path_to_ordered_heatmap = os.path.join('Output_Files','Heatmap_for_ordered_sequences.png')
 # path_to_tree : str ; path to a tree to be saved
-path_to_tree = './Output_Files/Tree.png'
+path_to_tree = os.path.join('Output_Files','Tree.png')
 
 '''Question 1'''
 
