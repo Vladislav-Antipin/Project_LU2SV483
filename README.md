@@ -1,4 +1,4 @@
-# Project_LU2SV483
+# Bioinformatics Project LU2SV483
 
 ## Description
 My first uni bioinformatics project with some basic sequence treatment and comparison tools. Some of them are used to compare hemin-binding proteins hbpC, hbpD, hbpE between 5 members of Bartonella spp. 
