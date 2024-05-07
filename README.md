@@ -9,6 +9,7 @@ For this, corresponding genes were found in Bartonella's WGS sequence set from E
 This repository already contains all outputs in Output_Files folder, but you can play with the code or change inputs in Files_for_Project folder. 
 
 To create a virtual environment and install  there all required modules, use this command in the terminal:
+
 Unix/MacOS:
 ```bash
 python3 -m venv .venv
