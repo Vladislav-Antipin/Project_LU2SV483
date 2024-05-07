@@ -8,6 +8,20 @@ For this, corresponding genes were found in Bartonella's WGS sequence set from E
 ## Usage
 This repository already contains all outputs in Output_Files folder, but you can play with the code or change inputs in Files_for_Project folder. 
 
+To create a virtual environment and install  there all required modules, use this command in the terminal:
+Unix/MacOS:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Windows:
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
 But note: star alignment of protein sequences takes some time so it was made once in step 4 and then commented out. Uncomment MSA.write_msa_as_fasta(path_to_prots,path_to_score_matrix, path_to_msa_result) in main_step4.py if you want to analyze other protein sequences.
 
 ## General Conclusion
