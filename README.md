@@ -78,7 +78,7 @@ Bartonella (henselae|quintana|taylorii|vinsonii|washoeensis)
 hbp(C|D|E)
 OMP_b-brl
 ```
-The short summary about [selected proteins](Output_Files/Bartonella_embl_summary_selective.txt):
+The short summary of [selected proteins](Output_Files/Bartonella_embl_summary_selective.txt):
 
 | Species | Uniprot ID | Function |
 |----------|----------|----------|
