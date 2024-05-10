@@ -95,9 +95,10 @@ def identity_ratio(seq1,seq2):
     '''
     return compare_seqs(seq1,seq2)[0]/len(seq1)
 
-def find_all_ORFs(seq, length_limit):
+def find_all_ORFs(seq, length_limit=48):
     ''' str*int -> dict[str:List[tuple(int)]]
     Assumption: seq is a nucleotide sequence, length_limit is a positive integer
+    corresponding to a minimal of a potential ORF (48 by default)
     Returns a dictionary with directions '+' and '-' as keys,
     and list of tuples of the positions of the start and the end of
     corresponding ORFs
@@ -168,6 +169,13 @@ def translate(ORF,gencode):
         protein+=gencode[codon]
         i+=3
     return protein
+
+# TEST_SEQ : str ; test sequence 
+TEST_SEQ = 'GCGCATGCTTACATAGGCCTAACAAACGGCTTATGACTAG'
+
+# TEST_ALIGNED_SEQ : List[str] ; sequences for the question 2
+TEST_ALIGNED_SEQ = ['AGTTAGAG--TAGGGCCAGCCAGCATAGCA-----GGTT',
+         'AGTTCCAGTATAGGCCCA---AGCAAAGCAGTACCGGTT']
 
 assert len_seq('ATGC')==4
 assert GC_content('ATGC')==0.5

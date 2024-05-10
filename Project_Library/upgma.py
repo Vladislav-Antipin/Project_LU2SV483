@@ -120,7 +120,7 @@ def update_nodes(child_i,child_j,parent_name,node_names):
     node_names.append(parent_name)
 
 
-def update_matrix(DistMat,child_i, child_j,tree, weight_i,weight_j, node_names):
+def update_matrix(DistMat,child_i, child_j, weight_i,weight_j):
     '''
     List[List[float]] * int * int * Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } * int * int * List[str]
     -> List[List[float]]
@@ -180,7 +180,7 @@ def get_tree_upgma(OriginalDistMat, leaf_names):
 
         update_nodes(child_i,child_j,parent_name,node_names)
 
-        CurrentDistMat = update_matrix(CurrentDistMat,child_i, child_j,tree, weight_i,weight_j, node_names)
+        CurrentDistMat = update_matrix(CurrentDistMat,child_i, child_j, weight_i,weight_j)
 
     # root_name : str ; name of the root node (the last parent)
     root_name = parent_name

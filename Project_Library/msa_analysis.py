@@ -214,6 +214,7 @@ def plot_alignment_score(score_list, title, path_to_output):
     ax.set_yticks([])   # to get rid of useless y-axis ticks
     plt.imshow([score_list], cmap = 'grey',aspect='auto')
     plt.colorbar()
+    plt.xlabel('position')
     plt.title(title)
     plt.savefig(path_to_output)
 
@@ -274,13 +275,13 @@ def reorder_dissimilarity_matrix(triang_Mat, old_seq_names, new_seq_names):
 
 if __name__ == '__main__':
 
-    # Test_seqs : Dict[str:str] ; test sequences {id:sequence}
-    Test_seqs = EMBL.read_fasta('Files_for_Project/SeqTest.fasta')
+    # TEST_SEQS : Dict[str:str] ; test sequences {id:sequence}
+    TEST_SEQS = EMBL.read_fasta('Files_for_Project/SeqTest.fasta')
     # Score_dict : Dict{(str,str):float} ; {(aminoacid1, aminoacid2):score}
     Score_dict = read_score_matrix('Files_for_Project/blosum62.mat')
     # profs_MSA_score : float ; MSA score obtained by prof's module
     # MSA_seqs : Dict[str] ; aligned sequences {id:sequence} 
-    profs_MSA_score, MSA_seqs = msa.star_align(Test_seqs, Score_dict)
+    profs_MSA_score, MSA_seqs = msa.star_align(TEST_SEQS, Score_dict)
     # my_MSA_score : float ; MSA score obtained by my module
     # scores_by_pos : List[float] ; list of scores by position
     my_MSA_score, scores_by_pos = dissimilarity_score(MSA_seqs,Score_dict)
@@ -296,12 +297,19 @@ if __name__ == '__main__':
     newDisMat = reorder_dissimilarity_matrix(DisMat, seq_names, new_seq_names)
 
     print('Test sequences:')
-    print(*['>'+name+'\n'+ Test_seqs[name] for name in Test_seqs.keys()], sep='\n')
+    print(*['>'+name+'\n'+ TEST_SEQS[name] for name in TEST_SEQS.keys()], sep='\n')
     print('Aligned:')
     print(*['>'+name+'\n'+ MSA_seqs[name] for name in MSA_seqs.keys()], sep='\n')
+
+    # Wm, Ws, Wi : float ; weights for a match, substitution and indel respectively 
+    Wm, Ws, Wi = 2.0, -1.0, -2.0
+    print(f'\nWith Wm = {Wm}  Ws = {Ws}  Wi = {Wi} :\n')
+    print('Overall score:', msa_alignment_score(MSA_seqs, Wm, Ws, Wi)[0])
+    print('Scores by position:\n', msa_alignment_score(MSA_seqs, Wm, Ws, Wi)[1])
+    print('\nWith BLOSUM62 substitution matrix:\n')
     print('Overall score:',my_MSA_score)
     print('Scores by position:\n', scores_by_pos)
-    print('Dissimilarity matrix:')
+    print('\nDissimilarity matrix:')
     print(seq_names,*triangular_to_rectangular([[round(elt,2) for elt in row] for row in DisMat]), sep='\n')
     print('Reordered matrix:')
     print(new_seq_names,*triangular_to_rectangular([[round(elt,2) for elt in row] for row in newDisMat]), sep='\n')
