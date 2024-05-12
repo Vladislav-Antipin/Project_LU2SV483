@@ -25,7 +25,8 @@ python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
-But note: star alignment of protein sequences takes some time so it was made once in step 4 and then commented out. Uncomment this line of code in main_step4.py if you want to analyze other protein sequences.
+
+But note: star alignment of protein sequences takes some time so it was made once in step 4 and then commented out. Uncomment this line of code in main_step4.py if you want to analyze other protein sequences:
 ```python 
 MSA.write_msa_as_fasta(path_to_prots,path_to_score_matrix, path_to_msa_result)
 ```
@@ -132,6 +133,6 @@ The dissimilarity matrix was rearranged so that the order of sequences matches t
 
 ### General Conclusion
 
-The comparison of hemin-binding proteins hbpC, hbpD, hbpE between 5 members of Bartonella spp. allows us to suggest that those proteins have diverged before the the speciation of *B. henselae, B. quintana, B. taylorii, B. vinsonii,* and *B. washoeensis*. 
+The comparison of hemin-binding proteins hbpC, hbpD, hbpE between 5 members of Bartonella spp. allows us to suggest that those proteins have diverged before the speciation of *B. henselae, B. quintana, B. taylorii, B. vinsonii,* and *B. washoeensis*. 
 
 

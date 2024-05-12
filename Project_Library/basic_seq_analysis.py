@@ -15,6 +15,7 @@ def GC_content(seq):
     for base in seq:
         if base == 'G' or base == 'C':
             GC+=1
+
     return GC/len(seq)
 
 def rev_compl(seq):
@@ -22,13 +23,13 @@ def rev_compl(seq):
     Assumption: seq is a nucleotide sequence
     Returns the reverse complement sequence
     '''
-    # nucls: Dict{str:str} ; dictionary of complement nucleotides
-    nucls = {'A':'T','T':'A','G':'C','C':'G'}
+    # Compl: Dict{str:str} ; dictionary of complement nucleotides
+    Compl = {'A':'T','T':'A','G':'C','C':'G'}
     # rev_compl : str ; future reverse complement sequence
     rev_compl = ''
     # base : str ; bases of the sequence
     for base in seq:
-        rev_compl = nucls[base] + rev_compl
+        rev_compl = Compl[base] + rev_compl
     return rev_compl
 
 def ORF_position(seq):
@@ -67,15 +68,17 @@ def compare_seqs(seq1,seq2):
             indels+=1
         else:
             substs+=1
-    return (matches, substs, indels)
+
+    return matches, substs, indels
 
 def edit_distance(seq1,seq2):
     ''' str*str -> int
     Assumption: seq1 and seq2 are aligned sequences
-    Returns the edit distance (the sum of indels and substitutions)
+    Returns the edit distance (the sum of substitutions and indels)
     '''
-    # compseqs : tuple(int) ; number of matches, substitutions and indels
+    # compseqs : Tuple(int) ; number of matches, substitutions and indels
     compseqs = compare_seqs(seq1,seq2)
+
     return compseqs[1]+compseqs[2]
 
 def align_score(seq1,seq2, Wm, Ws, Wi):
@@ -84,12 +87,13 @@ def align_score(seq1,seq2, Wm, Ws, Wi):
     Returns the alignment score - the weighted sum of matches, substitutions and indels
     (Wm,Ws,Wi are corresponding weights)
     '''
-    # compseqs : tuple(int,int,int) ; number of matches, substitutions and indels
+    # compseqs : Tuple(int,int,int) ; number of matches, substitutions and indels
     compseqs = compare_seqs(seq1,seq2)
+
     return Wm*compseqs[0]+Ws*compseqs[1]+Wi*compseqs[2]
 
 def identity_ratio(seq1,seq2):
-    ''' str*str -> int,int,int
+    ''' str*str -> float
     Assumption: seq1 and seq2 are aligned sequences
     Returns the identity ratio - the proportion of matches
     '''

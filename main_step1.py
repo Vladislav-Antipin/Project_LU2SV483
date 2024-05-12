@@ -2,13 +2,13 @@ from Project_Library import basic_seq_analysis as SeqAnalysis
 
 '''Question 1'''
 
-print('The sequence to analyze:\n',SeqAnalysis.TEST_SEQ, sep='')
+print('The sequence to analyze:',SeqAnalysis.TEST_SEQ, sep='\n')
 print(f'\nThe length of the sequence is {SeqAnalysis.len_seq(SeqAnalysis.TEST_SEQ)} nucleotides')
 print('The GC content is ',SeqAnalysis.GC_content(SeqAnalysis.TEST_SEQ))
 
 # revcompl : str, reverse complement sequence
 revcompl = SeqAnalysis.rev_compl(SeqAnalysis.TEST_SEQ)
-print('\nThe reverse complement is:\n',revcompl, sep='')
+print('\nThe reverse complement is:',revcompl, sep='\n')
 
 # atgs_seq : List[int] ; list of positions of ATG in the sequence
 # stops_seq : List[int] ; list of positions of STOP in the sequence
@@ -40,7 +40,7 @@ al_score = SeqAnalysis.align_score(SeqAnalysis.TEST_ALIGNED_SEQ[0],SeqAnalysis.T
 # id_ratio : float ; identity ratio (the proportion of matches)
 id_ratio = SeqAnalysis.identity_ratio(SeqAnalysis.TEST_ALIGNED_SEQ[0],SeqAnalysis.TEST_ALIGNED_SEQ[1])
 
-print('\nComparison of two sequences:\n',SeqAnalysis.TEST_ALIGNED_SEQ[0],'\n', SeqAnalysis.TEST_ALIGNED_SEQ[1], sep='')
+print('\nComparison of two sequences:',SeqAnalysis.TEST_ALIGNED_SEQ[0], SeqAnalysis.TEST_ALIGNED_SEQ[1], sep='\n')
 print(f'\nMatches: {match}  Substitutions: {subst}  Indels: {indel}')
 print('Edit distance:', edit_dist)
 print('Alignment score is', al_score, f'(for Wm={Wm} Ws={Ws} Wi={Wi})')

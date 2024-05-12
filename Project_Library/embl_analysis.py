@@ -5,51 +5,58 @@ import re
 import basic_seq_analysis as SeqAnalysis
 
 def get_EMBL_summary_as_dict(path):
-    ''' str -> dict[str:List[str]]
+    ''' str -> Dict[str:List[str]]
     Assumption: takes a path to EMBL database file
     Returns a dictionary of lists for each CDS UniProtID, each list consists of : ID of the sequence of origin,
     organism species, direction, beginning and end of CDS and function of the corresponding protein
-    Note:!!! Dictionary with UniProtID doesn't seem to work since there're less CDSs selected when
-    I used dictionary than when I used a list of lists (cf Output_Files)...
+    Note: /!\ Dictionary with UniProtID doesn't seem to work since there're less CDSs selected when
+    I used dictionary than when I used a list of lists (see Output_Files)...
     '''
-    # embl_sum : dict[str:List[str]] ; dictionary of lists {UniProtID : [Sequence ID, Species, Direction, Begin, End, Function]}
+    # embl_sum : Dict[str:List[str]] ; dictionary of lists {UniProtID : [Sequence ID, Species, Direction, Begin, End, Function]}
     embl_sum ={}
     # is_CDS : bool ; flag, the current line is in the CDS text block
     is_CDS = False
+    # is_product : bool ; flag, the current line is in 'product' block
+    is_product = False
     # streamr : stream ; input file stream
     with open(path, 'r') as streamr:
         # line : str ; a read line of the file
         for line in streamr:
-            # was_CDS : bool ; flag, the previous line is in the CDS text block
+            # was_CDS : bool ; flag, the previous line was in the CDS text block
             was_CDS = is_CDS
-            # the current line is still in the CDS block if the previous line was
-            # in CDS and the current line starts with FT with FOUR spaces (instead of normal 3)
+
+            ''' the current line is still in the CDS block if the previous line was
+            in CDS AND the current line starts with FT with FOUR spaces (instead of normal 3)'''
+
             is_CDS = (re.match('FT    ',line)!=None) and was_CDS
-            # if the prevous line was the last line of CDS block, save the data
-            if was_CDS and not is_CDS :
+
+            ''' if the previous line was the last line of CDS block, save the data'''
+
+            if was_CDS and not is_CDS :  
+                '''Note that this condition cannot be fulfilled before 
+                the assignment of id, species, dir, begin, end and function'''
                 embl_sum[uniprot]=[id, species, dir, begin, end, function]
+
             if re.match('OS   ', line):
-                # scpecies : str ; species name
+                # species : str ; species name
                 species = line.split()[1] + ' '+ line.split()[2]
 
             elif re.match('ID   ', line):
                 # id : str ; ID of the sequence
                 id = line.split()[1][:-1]
 
-            # if CDS block lines are read :
-            elif is_CDS:
+
+            elif is_CDS:  # if CDS block lines are read :
+            
                 # since 'product' text block sometimes extends beyond one line :
                 # was_product : bool; flag, the previous line was in 'product' block
-                # is_product : bool ; flag, the current line is in 'product' block
                 was_product = is_product
-                if re.match('FT                   /product="', line):
+                is_product = (was_product and re.match('FT                   /',line) == None ) or re.match('FT                   /product="', line)
+                if is_product and not was_product: 
                     # function : str; function of a corresponding protein
                     function = re.split('"|\n',line)[1]
-                    is_product = True
-                if is_product and not re.match('FT                   /',line):
-                    function = function +' '+ re.split(' +|\n',line)[1]
-                if was_product and re.match('FT                   /',line):
-                    is_product = False
+                elif is_product :
+                    function = function + ' ' + re.split('FT                   |\n|"',line)[1]
 
                 if re.match('FT                   /db_xref="UniProtKB', line) :
                     # uniprot : str ; UniProt ID of a corresponding protein
@@ -117,7 +124,7 @@ def get_and_select_CDS_positions(path_to_embl, path_to_regex):
     with open(path_to_embl, 'r') as streamr:
         # line : str ; a read line
         for line in streamr:
-            # was_CDS : bool ; flag, the previous line is in the CDS text block
+            # was_CDS : bool ; flag, the previous line was in the CDS text block
             was_CDS = is_CDS
             is_CDS = (re.match('FT    ',line)!=None) and was_CDS
             if was_CDS and not is_CDS and (species_OK and (gene_OK or product_OK)):
@@ -216,11 +223,13 @@ def get_EMBL_summary_as_listoflists(path):
     embl_sum =[]
     # is_CDS : bool ; flag, the current line is in the CDS text block
     is_CDS = False
+    # is_product : bool ; flag, the current line is in 'product' block
+    is_product = False
     # streamr : stream ; input file stream
     with open(path, 'r') as streamr:
         # line : str ; a read line of the file
         for line in streamr:
-            # was_CDS : bool ; flag, the previous line is in the CDS text block
+            # was_CDS : bool ; flag, the previous line was in the CDS text block
             was_CDS = is_CDS
             # the current line is still in the CDS block if the previous line was
             # in CDS and the current line starts with FT with FOUR spaces (instead of normal 3)
@@ -236,20 +245,17 @@ def get_EMBL_summary_as_listoflists(path):
                 # id : str ; ID of the sequence
                 id = line.split()[1][:-1]
 
-            # if CDS block lines are read :
-            elif is_CDS:
+            elif is_CDS: # if CDS block lines are read :
+
                 # since 'product' text block sometimes extends beyond one line :
                 # was_product : bool; flag, the previous line was in 'product' block
-                # is_product : bool ; flag, the current line is in 'product' block
                 was_product = is_product
-                if re.match('FT                   /product="', line):
+                is_product = (was_product and re.match('FT                   /',line) == None ) or re.match('FT                   /product="', line)
+                if is_product and not was_product: 
                     # function : str; function of a corresponding protein
                     function = re.split('"|\n',line)[1]
-                    is_product = True
-                if is_product and not re.match('FT                   /',line):
-                    function = function +' '+ re.split(' +|\n',line)[1]
-                if was_product and re.match('FT                   /',line):
-                    is_product = False
+                elif is_product :
+                    function = function + ' ' + re.split('FT                   |\n|"',line)[1]
 
                 if re.match('FT                   /db_xref="UniProtKB', line) :
                     # uniprot : str ; UniProt ID of a corresponding protein
