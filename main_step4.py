@@ -96,6 +96,8 @@ print('Heatmap of dissimilarity matrix for ordered sequences is saved in', path_
 handle = StringIO(newik_format)
 # tree_to_build : Bio.Phylo.Newick.Tree object
 tree_to_build = Phylo.read(handle, "newick")
+# fig : matplotlib.figure.Figure object  
+# ax : matplotlib.axes._axes.Axes object
 fig = plt.figure(figsize=(12,8), dpi=100)
 ax = fig.add_subplot(1, 1, 1)
 ax.set_yticks([]) # to get rid of unrestful y axis ticks

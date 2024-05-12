@@ -52,6 +52,7 @@ CDSs = EMBL.extract_CDSs_seq_from_fasta(CDS_positions,genome)
 '''Question 1 (modified step 2, used dictionaries)'''
 
 ''' Question 2 '''
+
 # ORFs : dict[str:List[Tuple(int)]] ; a dictionary with directions '+' and '-' as keys, 
 # and list of tuples of the positions of the start and the end of corresponding ORFs as values
 ORFs = SeqAnalysis.find_all_ORFs(SeqAnalysis.TEST_SEQ_WITH_ORFS)
