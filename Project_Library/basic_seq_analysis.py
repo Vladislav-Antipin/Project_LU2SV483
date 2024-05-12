@@ -100,15 +100,15 @@ def identity_ratio(seq1,seq2):
     return compare_seqs(seq1,seq2)[0]/len(seq1)
 
 def find_all_ORFs(seq, length_limit=48):
-    ''' str*int -> dict[str:List[tuple(int)]]
+    ''' str*int -> dict[str:List[Tuple(int)]]
     Assumption: seq is a nucleotide sequence, length_limit is a positive integer
     corresponding to a minimal of a potential ORF (48 by default)
     Returns a dictionary with directions '+' and '-' as keys,
     and list of tuples of the positions of the start and the end of
-    corresponding ORFs
+    corresponding ORFs as values
     Note: positions start from 0 and not from 1
     '''
-    # ORFs : dict[str:List[tuple(int)]] ; dictionary with directions '+' and '-' as keys,
+    # ORFs : dict[str:List[Tuple(int)]] ; dictionary with directions '+' and '-' as keys,
     # and list of tuples of the positions of the start and the end of corresponding ORFs
     ORFs = {'+':[],'-':[]}
 
@@ -181,6 +181,10 @@ TEST_SEQ = 'GCGCATGCTTACATAGGCCTAACAAACGGCTTATGACTAG'
 TEST_ALIGNED_SEQ = ['AGTTAGAG--TAGGGCCAGCCAGCATAGCA-----GGTT',
          'AGTTCCAGTATAGGCCCA---AGCAAAGCAGTACCGGTT']
 
+# TEST_SEQ_ORFS : str ; test sequence to find ORFs in 
+TEST_SEQ_WITH_ORFS = 'GCATGCGAGCTATATGCATGGCCTACACGCTAAAGATGCAGATGCTAAATACGGAAGCAGACCGTA\
+GCGCTTGATACATCTCGTAAGCATA'
+
 assert len_seq('ATGC')==4
 assert GC_content('ATGC')==0.5
 assert rev_compl('ATGC')=='GCAT'
@@ -189,6 +193,5 @@ assert compare_seqs('CA-CGTGCTGACCCAACC','CAGCGCGCTGG--CAGCC') == (12, 3, 3)
 assert edit_distance('CA-CGTGCTGACCCAACC','CAGCGCGCTGG--CAGCC') == 6
 assert align_score('CA-CGTGCTGACCCAACC','CAGCGCGCTGG--CAGCC',+2,-1,-2) == 15
 assert identity_ratio('CA-CGTGCTGACCCAACC','CAGCGCGCTGG--CAGCC') == 12/18
-assert find_all_ORFs('GCATGCGAGCTATATGCATGGCCTACACGCTAAAGATGCAGATGCTAAATACGGAAGCAGACCGTA\
-GCGCTTGATACATCTCGTAAGCATA',48)=={'+': [(2, 73), (13, 66), (17, 73)], '-': [(1, 81), (12, 68)]}
+assert find_all_ORFs(TEST_SEQ_WITH_ORFS,48)=={'+': [(2, 73), (13, 66), (17, 73)], '-': [(1, 81), (12, 68)]}
 assert translate('ATGAAATGA',{'ATG':'M','AAA':'K','TGA':'*'}) == 'MK*'

@@ -29,7 +29,8 @@ path_to_ordered_heatmap = os.path.join('Output_Files','Heatmap_for_ordered_seque
 # path_to_tree : str ; path to a tree to be saved
 path_to_tree = os.path.join('Output_Files','Tree.png')
 
-'''Question 1'''
+'''Question 1 
+see Project_Library/msa_analysis.py for an example of usage of get_msa_alignment_score()'''
 
 # Use once to save the alignment result, otherwise you're gonna wait for eternity... /!\
 #MSA.write_msa_as_fasta(path_to_prots,path_to_score_matrix, path_to_msa_result)
@@ -55,6 +56,8 @@ print('Plot of MSA score by position is saved in', path_to_alignment_score_plot)
 # seq_names : List[str] ; list of sequence names (header of the matrix)
 DistMat, seq_names = MSA.compute_dissimilarity_matrix(MSA_dict)
 
+'''Question 5'''
+
 '''Modify seq_names so that they contain species'''
 # stream_r : stream ; input file stream 
 with open(path_to_embl_summary, 'r') as stream_r:
@@ -65,8 +68,6 @@ with open(path_to_embl_summary, 'r') as stream_r:
                         if seq_names[i] in line:
                                 seq_names[i] += '_'+line.split()[1][0]+'_' + line.split()[2]
 
-
-'''Question 5'''
 
 MSA.plot_dissimilarity_matrix_as_heatmap(DistMat, seq_names, path_to_unordered_heatmap)
 print('Heatmap of dissimilarity matrix (sequences aren\'t ordered) is saved in', path_to_unordered_heatmap)
@@ -89,7 +90,7 @@ OrderedDistMat = MSA.reorder_dissimilarity_matrix(DistMat, seq_names, ordered_se
 MSA.plot_dissimilarity_matrix_as_heatmap(OrderedDistMat, ordered_seq_names, path_to_ordered_heatmap)
 print('Heatmap of dissimilarity matrix for ordered sequences is saved in', path_to_ordered_heatmap)
 
-'''Draw a tree with BioPython Module'''
+'''Draw a tree from newik format with BioPython Module'''
 
 # handle : StringIO object
 handle = StringIO(newik_format)

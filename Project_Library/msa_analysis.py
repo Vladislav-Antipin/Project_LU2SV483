@@ -31,7 +31,7 @@ def write_msa_as_fasta(path_to_unaligned_seqs, path_to_substitution_matrix, path
         for uniprot in MSA_seqs:
             stream_w.write(f'>{uniprot}\n{MSA_seqs[uniprot]}\n')
 
-def msa_alignment_score(MSA_dict, w_match, w_mismatch, w_indel):
+def get_msa_alignment_score(MSA_dict, w_match, w_mismatch, w_indel):
     '''
     Dict{str:str} * float * float * float -> float, List[float]
     Assumption: MSA_dict contains same sized aligned sequences as values
@@ -304,8 +304,8 @@ if __name__ == '__main__':
     # Wm, Ws, Wi : float ; weights for a match, substitution and indel respectively 
     Wm, Ws, Wi = 2.0, -1.0, -2.0
     print(f'\nWith Wm = {Wm}  Ws = {Ws}  Wi = {Wi} :\n')
-    print('Overall score:', msa_alignment_score(MSA_seqs, Wm, Ws, Wi)[0])
-    print('Scores by position:\n', msa_alignment_score(MSA_seqs, Wm, Ws, Wi)[1])
+    print('Overall score:', get_msa_alignment_score(MSA_seqs, Wm, Ws, Wi)[0])
+    print('Scores by position:\n', get_msa_alignment_score(MSA_seqs, Wm, Ws, Wi)[1])
     print('\nWith BLOSUM62 substitution matrix:\n')
     print('Overall score:',my_MSA_score)
     print('Scores by position:\n', scores_by_pos)

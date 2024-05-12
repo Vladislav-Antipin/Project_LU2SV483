@@ -8,7 +8,7 @@ def get_EMBL_summary_as_dict(path):
     ''' str -> Dict[str:List[str]]
     Assumption: takes a path to EMBL database file
     Returns a dictionary of lists for each CDS UniProtID, each list consists of : ID of the sequence of origin,
-    organism species, direction, beginning and end of CDS and function of the corresponding protein
+    organism species, direction, beginning and end of CDS and function of the corresponding protein ; incomplete CDSs are excluded
     Note: /!\ Dictionary with UniProtID doesn't seem to work since there're less CDSs selected when
     I used dictionary than when I used a list of lists (see Output_Files)...
     '''
@@ -62,7 +62,8 @@ def get_EMBL_summary_as_dict(path):
                     # uniprot : str ; UniProt ID of a corresponding protein
                     uniprot = line.split(':')[1][:-2]
 
-            elif re.match('FT   CDS', line) and not re.search('[<>]',line):
+            # /!\ we do not consider incomplete CDSs for this project
+            elif re.match('FT   CDS', line) and not re.search('[<>]',line):  
                 is_CDS = True
                 is_product = False
                 if re.search('complement', line):
@@ -103,9 +104,9 @@ def get_and_select_CDS_positions(path_to_embl, path_to_regex):
     ''' str * str -> dict[str:List[str]]
     Assumptions: takes a path to EMBL database file and a path to a file with
     regular expressions needed for selection of CDSs of interest : regex for species name,
-    gene name and protein function ('product') on 1st, 2nd and 3rd lines respectively
-    with a new line character after each line
-    Returns a dictionary of lists for each of selected CDS UniProtID, each list consists of :
+    gene name and protein function ('product') on 1st, 2nd and 3rd line respectively
+    (with a new line character after each line)
+    Returns a dictionary of lists for each of selected CDS UniProtID, each list consists of:
     ID of the sequence of origin, direction, beginning and end of CDS
     '''
     # CDS_positions : dict[str:List[str]] ; dictionary of lists {UniProtID : [Sequence ID, Direction, Begin, End]}
@@ -187,6 +188,7 @@ def read_fasta(path):
                 else:
                     seq = seq + line
     fasta[id] = seq
+    
     return fasta
 
 def extract_CDSs_seq_from_fasta(CDS_positions,fasta):
@@ -213,11 +215,13 @@ def extract_CDSs_seq_from_fasta(CDS_positions,fasta):
 #################################################################
 ##################### IF I USE LIST OF LISTS ####################
 #################################################################
+
 def get_EMBL_summary_as_listoflists(path):
     ''' str -> List[List[str]]
     Assumption: takes a path to EMBL database file
     Returns a list of lists for each CDS ,each list consists of : ID of the sequence of origin,
-    organism species, direction, beginning and end of CDS, UniProtID and function of the corresponding protein
+    organism species, direction, beginning and end of CDS, UniProtID and function of the corresponding 
+    protein ; incomplete CDSs are excluded
     '''
     # embl_sum : List[List[str]] ; list of lists [Sequence ID, Species, Direction, Begin, End,UniProtID, Function] for each CDS
     embl_sum =[]
@@ -231,11 +235,16 @@ def get_EMBL_summary_as_listoflists(path):
         for line in streamr:
             # was_CDS : bool ; flag, the previous line was in the CDS text block
             was_CDS = is_CDS
-            # the current line is still in the CDS block if the previous line was
-            # in CDS and the current line starts with FT with FOUR spaces (instead of normal 3)
+
+            ''' the current line is still in the CDS block if the previous line was
+            in CDS AND the current line starts with FT with FOUR spaces (instead of normal 3)'''
             is_CDS = (re.match('FT    ',line)!=None) and was_CDS
-            # if the previous line was the last line of CDS block, save the data
+
+            ''' if the previous line was the last line of CDS block, save the data'''
+
             if was_CDS and not is_CDS :
+                '''Note that this condition cannot be fulfilled before 
+                the assignment of id, species, dir, begin, end and function'''
                 embl_sum.append([id, species, dir, begin, end,uniprot, function])
             if re.match('OS   ', line):
                 # species : str ; species name
@@ -261,6 +270,7 @@ def get_EMBL_summary_as_listoflists(path):
                     # uniprot : str ; UniProt ID of a corresponding protein
                     uniprot = line.split(':')[1][:-2]
 
+            # /!\ we do not consider incomplete CDSs for this project
             elif re.match('FT   CDS', line) and not re.search('[<>]',line):
                 is_CDS = True
                 is_product = False

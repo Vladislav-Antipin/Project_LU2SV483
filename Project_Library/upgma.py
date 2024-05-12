@@ -237,27 +237,44 @@ def convert_tree_from_dict_to_newik(tree, root_name):
 
 if __name__ == '__main__':
 
-     # Test_seqs : Dict[str:str] ; test sequences {id:sequence}
-    Test_seqs = EMBL.read_fasta('Files_for_Project/SeqTest.fasta')
+     # TEST_SEQS_FOR_MSA : Dict[str:str] ; test sequences {id:sequence}
+    TEST_SEQS_FOR_MSA = EMBL.read_fasta('Files_for_Project/SeqTest.fasta')
     # Score_dict : Dict{(str,str):float} ; {(aminoacid1, aminoacid2):score}
     Score_dict = MSA.read_score_matrix('Files_for_Project/blosum62.mat')
     
     # MSA_seqs : List[str] ; aligned sequences {id:sequence} 
-    MSA_seqs = MSA.msa.star_align(Test_seqs, Score_dict)[1]
+    MSA_seqs = MSA.msa.star_align(TEST_SEQS_FOR_MSA, Score_dict)[1]
     
 
     # DisMat : List[List[float]] ; dissimilarity matrix
     # seq_names : List[str] ; sequences' names (header of dissimilarity matrix)
     DisMat , seq_names = MSA.compute_dissimilarity_matrix(MSA_seqs)
 
+    TEST_DIST_MAT = [
+        [0],
+        [42,0],
+        [36,45,0],
+        [40,49,22,0],
+        [16,31,40,36,0],
+        [32,53,34,42,28,0]
+    ]
+
+    TEST_SEQ_NAMES = ['A','B','C','D','E','F']
+
     # tree : Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } ; tree as a 
     #        dictionary {parent : (weight, (child_i_name, dist_i), (child_j_name, dist_j))}
     # root_name : str ; name of the root node
-    tree, root_name = get_tree_upgma(DisMat, seq_names)
+    tree, root_name = get_tree_upgma(TEST_DIST_MAT, TEST_SEQ_NAMES)
 
     print('Aligned test sequences:')
     print(*['>'+name+'\n'+ MSA_seqs[name] for name in MSA_seqs.keys()], sep='\n')
+    print('Their distance matrix:')
+    print(seq_names)
+    print(*MSA.triangular_to_rectangular(DisMat),'\n', sep='\n')
+    print('For a test distance matrix:')
+    print(TEST_SEQ_NAMES)
+    print(*MSA.triangular_to_rectangular(TEST_DIST_MAT),'\n', sep='\n')
     print('Tree :',tree, sep='\n')
     print('Root :',root_name)
     print('Ordered sequences:', get_ordered_names_from_tree(tree,root_name))
-    print('Newik format', convert_tree_from_dict_to_newik(tree, root_name))
+    print('Newik format:', convert_tree_from_dict_to_newik(tree, root_name))

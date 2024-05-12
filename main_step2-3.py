@@ -27,7 +27,7 @@ EMBL.write_EMBL_summary_file_from_listoflists(embl_sum_listoflists, path_to_summ
 
 '''Moral of the story : we didn't get exactly the same results using a list of lists
 and a dictionary using UniProtID as a key - which means that
-UniProtID is not a unique identifier for CDS and we better use a list of lists'''
+UniProtID is not a unique identifier for CDS and we should better use a list of lists'''
 
 print('EMBL summary saved to', path_to_summary_output_from_listoflists )
 
@@ -51,7 +51,15 @@ CDSs = EMBL.extract_CDSs_seq_from_fasta(CDS_positions,genome)
 
 '''Question 1 (modified step 2, used dictionaries)'''
 
-''' Question 1 (see SeqAnalysis.find_all_ORFs() function and it's asserts)'''
+''' Question 2 '''
+# ORFs : dict[str:List[Tuple(int)]] ; a dictionary with directions '+' and '-' as keys, 
+# and list of tuples of the positions of the start and the end of corresponding ORFs as values
+ORFs = SeqAnalysis.find_all_ORFs(SeqAnalysis.TEST_SEQ_WITH_ORFS)
+
+print(f'\nFor a sequence:\n{SeqAnalysis.TEST_SEQ_WITH_ORFS}')
+# dir : str ; direction of the strand
+# boundaries : Tuple(int) ; boundaries of the ORF
+print(*[f'{len(ORFs[dir])} ORF(s) on the {dir} strand: {", ".join([str(boundaries[0])+'-'+str(boundaries[1]) for boundaries in ORFs[dir]])}' for dir in ORFs.keys()],'\n', sep = '\n')
 
 '''Question 3'''
 
