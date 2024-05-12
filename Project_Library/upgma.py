@@ -250,15 +250,16 @@ if __name__ == '__main__':
     # seq_names : List[str] ; sequences' names (header of dissimilarity matrix)
     DisMat , seq_names = MSA.compute_dissimilarity_matrix(MSA_seqs)
 
+    # TEST_DIST_MAT : List[List[float]] ; test dissimilarity matrix
     TEST_DIST_MAT = [
-        [0],
-        [42,0],
-        [36,45,0],
-        [40,49,22,0],
-        [16,31,40,36,0],
-        [32,53,34,42,28,0]
+        [0.0],
+        [42.0,0.0],
+        [36.0,45.0,0.0],
+        [40.0,49.0,22.0,0.0],
+        [16.0,31.0,40.0,36.0,0.0],
+        [32.0,53.0,34.0,42.0,28.0,0.0]
     ]
-
+    # TEST_SEQ_NAMES : List[str] ; test sequences' names 
     TEST_SEQ_NAMES = ['A','B','C','D','E','F']
 
     # tree : Dict{ str : Tuple(int, Tuple(str, float), Tuple(str, float) ) } ; tree as a 
