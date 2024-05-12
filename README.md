@@ -26,7 +26,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-But note: star alignment of protein sequences takes some time so it was made once in step 4 and then commented out. Uncomment this line of code in main_step4.py if you want to analyze other protein sequences:
+But note: multiple sequence alignment takes some time so it was made once in step 4 and then commented out. Uncomment this line of code in main_step4.py if you want to analyze other protein sequences:
 ```python 
 MSA.write_msa_as_fasta(path_to_prots,path_to_score_matrix, path_to_msa_result)
 ```
