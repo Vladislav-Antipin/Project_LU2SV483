@@ -137,7 +137,7 @@ With the help of [BLOSUM62](Files_for_Project/blosum62.mat) substitution matrix,
 
 ![](Output_Files/Alignment_score_plot_by_position.png)
 
-Based on aligned sequences, a dissimilarity matrix was computed and represented as a heatmap (sequences in a random order):
+Based on aligned sequences, a dissimilarity matrix was computed and represented as a heatmap (sequences are unordered, but grouped by species):
 
 ![](Output_Files/Heatmap_for_unordered_sequences.png)
 
