@@ -85,7 +85,7 @@ Remarks:
 - With a list of lists method, I've got 9943 CDSs out of total 10177 CDSs. This is because all incomplete CDSs were excluded. Indeed, a search for a regular expression  ```CDS.*[<>]``` gives 234 incomplete sequences, so we can simply check that 9943+234=10177.
 
 The same EMBL file was employed for the selection of proteins and species of interest. [Criteria for this selection](Files_for_Project/criteria_for_gene_selection.txt) were formulated as regular expressions and stored as a .txt file
-with species name, gene name and protein function ('product') on 1st, 2nd and 3rd line respectively:
+with species name, gene name and protein function (product) on 1st, 2nd and 3rd line respectively:
 
 ```
 Bartonella (henselae|quintana|taylorii|vinsonii|washoeensis)
@@ -129,7 +129,9 @@ GCATGCGAGCTATATGCATGGCCTACACGCTAAAGATGCAGATGCTAAATACGGAAGCAGACCGTAGCGCTTGATACATC
 
 *see* [*MSA analysis*](Project_Library/msa_analysis.py) *and* [*UPGMA*](Project_Library/upgma.py) *modules*
 
-First, obtained protein sequences were [aligned](Output_Files/aligned_selected_proteins.fasta) using [MSA](Project_Library/msa.py) *(Multiple Sequence Alignment)* with star heuristic.
+First, obtained protein sequences were aligned using [MSA](Project_Library/msa.py) *(Multiple Sequence Alignment)* with star heuristic.
+
+Since the alignment of those protein sequences takes some time, it was made once, the result was [saved as .fasta](Output_Files/aligned_selected_proteins.fasta) and then the corresponding line of code was commented out.
 
 With the help of [BLOSUM62](Files_for_Project/blosum62.mat) substitution matrix, the overall MSA score was computed (54255) as well as the score for each position of the alignment, which I've represented as a barcode:
 
