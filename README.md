@@ -82,7 +82,7 @@ AILX01000001 |Bartonella washoeensis | -  |  7658 - 8155  | J1JR39  |  hypotheti
 
 Remarks: 
 - I didn't get exactly the same result using a list of lists and a dictionary using Uniprot ID as a key. This means that Uniprot ID is not a unique identifier for CDS and we should better use a list of lists or another ID as a key.
-- With a list of lists method, I've got 9943 CDSs out of total 10177 CDSs. This is because all incomplete CDSs were excluded. Indeed, a search for a regular expression  ```CDS.*[<>]``` gives 234 incomplete sequences, so we can simply check that 9943+234=10177.
+- With a list of lists method, I've got 9943 CDSs out of total 10177 CDSs. This is because all incomplete CDSs were excluded. Indeed, a search with a regular expression  ```CDS.*[<>]``` gives 234 incomplete sequences, so we can simply check that 9943+234=10177.
 
 The same EMBL file was employed for the selection of proteins and species of interest. [Criteria for this selection](Files_for_Project/criteria_for_gene_selection.txt) were formulated as regular expressions and stored as a .txt file
 with species name, gene name and protein function (product) on 1st, 2nd and 3rd line respectively:
