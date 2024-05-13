@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 But note: multiple sequence alignment takes some time so it was made once in step 4 and then commented out. Uncomment this line of code in main_step4.py if you want to analyze other protein sequences:
 ```python 
-MSA.write_msa_as_fasta(path_to_prots,path_to_score_matrix, path_to_msa_result)
+MSA.write_msa_as_fasta(path_to_prots, path_to_score_matrix, path_to_msa_result)
 ```
  
 ## Details
@@ -145,7 +145,7 @@ The dissimilarity matrix was then put into the [UPGMA algorithm](Project_Library
 
 This dictionary was unpacked using a stack data structure as an intermediate, and then converted to newick parenthesized format as well as to a list of ordered according to it sequences.
 
-The neighbor joining (NJ) tree was drawn based on the newik representation with [Biopython](requirements.txt) module. 
+The neighbor joining (NJ) tree was drawn based on the newick representation with [Biopython](requirements.txt) module. 
 
 ![](Output_Files/Tree.png)
 
@@ -155,6 +155,6 @@ The dissimilarity matrix was rearranged so that the order of sequences matches t
 
 ### General Conclusion
 
-The comparison of hemin-binding proteins hbpC, hbpD, hbpE between 5 members of Bartonella spp. allows us to suggest that those proteins have diverged before the speciation of *B. henselae, B. quintana, B. taylorii, B. vinsonii,* and *B. washoeensis*, since the distances between sequences related to the same species are **always** grater than those between different species. Unfortunately, we cannot fully analyze this tree since for the majority of sequences the correspondence between hbp gene type (C,D or E) and UniprotID is not established (these were marked as just "OMP beta-barrel domain containing protein"). But for those with known correspondence we can see that there're situated close on the tree, this supports the hypothesis above.
+The comparison of hemin-binding proteins hbpC, hbpD, hbpE between 5 members of Bartonella spp. allows us to suggest that those proteins have diverged before the speciation of *B. henselae, B. quintana, B. taylorii, B. vinsonii,* and *B. washoeensis*, since the distances between sequences related to the same species are **always** greater than those between different species. Unfortunately, we cannot fully analyze this tree since for the majority of sequences the correspondence between hbp gene type (C,D or E) and UniprotID is not established (these were marked as just "OMP beta-barrel domain containing protein"). But for those with known correspondence we can see that there're situated close on the tree, this supports the hypothesis above.
 
 
